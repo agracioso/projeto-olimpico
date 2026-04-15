@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UniSENAI • Workshop IA aplicada à docência</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background:#f4f4f4; color:#333; line-height:1.6; }
+    .container { max-width:1000px; margin:20px auto; padding:20px; background:#fff; border-radius:10px; box-shadow:0 0 15px rgba(0,0,0,0.1); }
+    .topbar { display:flex; gap:16px; align-items:center; flex-wrap:wrap; justify-content:space-between; margin-bottom:20px; }
+    .brand { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+    .brand img { width:110px; height:auto; }
+    .titleblock { line-height:1.2; }
+    .kicker { font-size:0.95em; color:#2E7D32; font-weight:700; letter-spacing:.2px; }
+    .maintitle { font-size:1.35em; font-weight:800; margin-top:2px; }
+    .pill { display:inline-block; padding:6px 12px; border-radius:999px; background:#E8F5E8; border:1px solid #C8E6C9; color:#1B5E20; font-size:.9em; font-weight:700; margin-right:8px; margin-top:6px;}
+    h1 { font-size:2em; margin:20px 0 12px; color:#2E7D32; }
+    h2 { color:#388E3C; font-size:1.35em; margin-top:28px; margin-bottom:16px; border-bottom:3px solid #E8F5E8; padding-bottom:8px; }
+    h3 { color:#2E7D32; font-size:1.1em; margin-top:18px; margin-bottom:10px; }
+    p { margin:10px 0; }
+    .info-box { background:#E8F5E8; padding:16px 18px; border-radius:8px; margin:16px 0; border-left:5px solid #2E7D32; }
+    .success-box { background:#C8E6C9; padding:16px 18px; border-radius:8px; margin:16px 0; border-left:5px solid #1B5E20; }
+    .warning-box { background:#FFF3E0; padding:16px 18px; border-radius:8px; margin:16px 0; border-left:5px solid #FB8C00; }
+    .highlight-box { background:#E3F2FD; padding:16px 18px; border-radius:8px; margin:16px 0; border-left:5px solid #1976D2; }
+    
+    /* Flow diagram */
+    .flow-container { display:flex; gap:20px; align-items:center; justify-content:space-between; margin:30px 0; flex-wrap:wrap; }
+    .flow-step { flex:1; min-width:200px; background:#f9f9f9; padding:20px; border-radius:8px; border:2px solid #E8F5E8; text-align:center; position:relative; }
+    .flow-step.active { background:#E8F5E8; border-color:#2E7D32; }
+    .flow-step h3 { margin-top:0; color:#2E7D32; }
+    .flow-step p { font-size:0.95em; margin:10px 0; }
+    .flow-arrow { font-size:24px; color:#2E7D32; font-weight:bold; display:flex; align-items:center; justify-content:center; }
+    @media (max-width:768px) { .flow-container { flex-direction:column; } .flow-arrow { transform:rotate(90deg); } }
+
+    .grid { display:grid; grid-template-columns:repeat(12,1fr); gap:16px; margin-top:16px; }
+    .card { grid-column:span 6; background:#fff; border:2px solid #E8F5E8; border-radius:10px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.05); transition:all 0.3s; }
+    .card:hover { border-color:#2E7D32; box-shadow:0 4px 12px rgba(46,125,50,0.15); }
+    .card h3 { margin-top:0; color:#2E7D32; }
+    .card p { margin:8px 0; font-size:0.95em; }
+    .card-label { display:inline-block; padding:4px 10px; background:#E8F5E8; color:#1B5E20; border-radius:20px; font-size:0.85em; font-weight:700; margin-bottom:10px; }
+    
+    .btn { display:inline-block; margin-top:12px; padding:12px 18px; background:#2E7D32; color:#fff; text-decoration:none; border-radius:6px; font-weight:700; transition:all 0.2s; border:none; cursor:pointer; font-size:0.95em; }
+    .btn:hover { background:#1B5E20; transform:translateY(-2px); box-shadow:0 4px 8px rgba(0,0,0,0.2); }
+    .btn-secondary { background:#0288D1; }
+    .btn-secondary:hover { background:#0277BD; }
+    .btn-ghost { background:#fff; color:#2E7D32; border:2px solid #C8E6C9; }
+    .btn-ghost:hover { background:#E8F5E8; }
+    .btn-small { padding:8px 12px; font-size:0.85em; }
+    
+    ul, ol { padding-left:24px; }
+    li { margin:8px 0; }
+    
+    pre { background:#f5f5f5; padding:14px; border-radius:6px; overflow-x:auto; border-left:4px solid #2E7D32; font-size:0.9em; }
+    code { background:#f5f5f5; padding:3px 8px; border-radius:4px; font-family:"Courier New", monospace; }
+    
+    .table { width:100%; border-collapse:collapse; margin:16px 0; border-radius:8px; overflow:hidden; }
+    .table th, .table td { padding:12px 14px; border-bottom:1px solid #eee; text-align:left; vertical-align:top; }
+    .table th { background:#2E7D32; color:#fff; font-weight:700; }
+    .table tr:nth-child(even) td { background:#fafafa; }
+    .table tr:hover td { background:#f0f0f0; }
+    
+    .tools-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:12px; margin:16px 0; }
+    .tool-badge { background:#E8F5E8; border:1px solid #C8E6C9; padding:12px; border-radius:6px; text-align:center; font-weight:600; color:#1B5E20; font-size:0.9em; }
+    .tool-badge.free { border-color:#4CAF50; background:#C8E6C9; }
+    .tool-badge.premium { border-color:#FB8C00; background:#FFE0B2; }
+    .tool-badge a { color:inherit; text-decoration:none; }
+    .tool-badge a:hover { text-decoration:underline; }
+    
+    .footer { margin-top:32px; text-align:center; font-size:0.95em; color:#666; border-top:1px solid #eee; padding-top:20px; }
+    .footer a { color:#2E7D32; text-decoration:none; font-weight:700; }
+    .footer a:hover { text-decoration:underline; }
+    
+    @media (max-width:860px) { .card { grid-column:span 12; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <img src="https://albinojr.com/curso/logo.png" alt="Logo do Prof. Albino Szesz Junior" />
+        <div class="titleblock">
+          <div class="kicker">UniSENAI • Semana Pedagógica</div>
+          <div class="maintitle">IA aplicada à docência (Engenharia & Indústria)</div>
+        </div>
+      </div>
+    </div>
+    
+    <span class="pill">⏱️ 19h–22h</span><span class="pill">💻 Computadores</span><span class="pill">🧩 Mão na massa</span>
+
+    <h1>🎯 Roteiro oficial (siga pelo site)</h1>
+    <p>Bem-vindo(a)! Este ambiente foi organizado para você acompanhar o workshop passo a passo. A dinâmica será: <strong>eu demonstro</strong> e, em seguida, <strong>você reproduz</strong> no seu computador.</p>
+
+    <div class="success-box">
+      <p><strong>🎓 Meta da noite:</strong> sair com <strong>1 plano de aula</strong> + <strong>1 objeto digital de aprendizagem</strong> + <strong>1 assistente de IA</strong> para tirar dúvidas dos estudantes. Tudo usando ferramentas <strong>gratuitas ou de baixo custo</strong>, com foco na <strong>lógica do processo</strong>, não na ferramenta.</p>
+    </div>
+
+    <h2>📊 O Fluxo Pedagógico (Começo, Meio e Fim)</h2>
+    <p>A estrutura do workshop segue uma lógica simples e replicável: você cria um <strong>plano de aula</strong>, transforma esse plano em um <strong>objeto de aprendizagem</strong> (material visual/interativo) e, por fim, cria um <strong>assistente de IA</strong> para apoiar os estudantes. O importante é entender os <strong>prompts</strong> e a <strong>lógica</strong>, não apenas a ferramenta.</p>
+
+    <div class="flow-container">
+      <div class="flow-step active">
+        <h3>1️⃣ Começo</h3>
+        <p><strong>Plano de Aula</strong></p>
+        <p style="font-size:0.85em; color:#666;">Estrutura, objetivos, atividades</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <h3>2️⃣ Meio</h3>
+        <p><strong>Objeto Digital</strong></p>
+        <p style="font-size:0.85em; color:#666;">Slides + Quiz interativo</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <h3>3️⃣ Fim</h3>
+        <p><strong>Assistente de IA</strong></p>
+        <p style="font-size:0.85em; color:#666;">Tira-dúvidas, apoio ao estudante</p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>💡 Princípio Central - Prompts Encadeados:</strong> A estratégia é usar uma IA para gerar prompts otimizados para a próxima etapa. Você cria o plano no ChatGPT, depois pede para ele gerar um prompt para o Gamma criar slides, depois um prompt para o Lovable criar o quiz, e finalmente um prompt para o Gens criar o assistente. Assim, cada ferramenta recebe um prompt contextualizado e otimizado, economizando tempo e garantindo consistência!</p>
+    </div>
+
+    <h2>📅 Agenda (3 horas)</h2>
+    <table class="table">
+      <thead><tr><th>Horário</th><th>Bloco</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr><td><strong>19:00–19:20</strong></td><td>Alinhamento + boas práticas</td><td>Clareza do que usar / evitar (ética, autoria, confiabilidade)</td></tr>
+        <tr><td><strong>19:20–20:10</strong></td><td>🎯 COMEÇO: Plano de aula com IA</td><td>Plano de aula base + prompts para as próximas etapas</td></tr>
+        <tr><td><strong>20:10–20:50</strong></td><td>🎯 MEIO: Objeto digital de aprendizagem</td><td>Slides (Gamma) + Quiz interativo (Lovable)</td></tr>
+        <tr><td><strong>20:50–21:00</strong></td><td>☕ Pausa</td><td>—</td></tr>
+        <tr><td><strong>21:00–21:40</strong></td><td>🎯 FIM: Assistente de IA para estudantes</td><td>Agente de tira-dúvidas (Gems no Gemini)</td></tr>
+        <tr><td><strong>21:40–22:00</strong></td><td>Encerramento + troca de experiências</td><td>Checklist de aplicação imediata + próximos passos</td></tr>
+      </tbody>
+    </table>
+
+    <h2>🚀 As Três Atividades Práticas</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="card-label">1️⃣ COMEÇO</span>
+        <h3>Plano de Aula com IA</h3>
+        <p>Aprenda a estruturar um plano de aula usando prompts eficazes. Usaremos o <strong>ChatGPT</strong> como exemplo, mas a lógica funciona com qualquer IA.</p>
+        <p style="font-size:0.85em; color:#666;"><strong>Ferramentas alternativas:</strong> Claude, Gemini, Copilot, Llama, etc.</p>
+        <a class="btn btn-secondary" href="01_plano_aula.html">Abrir Roteiro: Plano de Aula</a>
+      </div>
+
+      <div class="card">
+        <span class="card-label">2️⃣ MEIO</span>
+        <h3>Objeto Digital de Aprendizagem</h3>
+        <p>Transforme o plano de aula em slides (Gamma) e um quiz interativo (Lovable). Materiais prontos para usar em aula.</p>
+        <p style="font-size:0.85em; color:#666;"><strong>Ferramentas alternativas:</strong> Canva, Figma, código HTML/CSS, etc.</p>
+        <a class="btn btn-secondary" href="02_objeto_digital.html">Abrir Roteiro: Objeto Digital</a>
+      </div>
+
+      <div class="card">
+        <span class="card-label">3️⃣ FIM</span>
+        <h3>Assistente de IA para Estudantes</h3>
+        <p>Crie um agente de IA que tira dúvidas e apoia o aprendizado. Usaremos o <strong>Gems (Gemini)</strong> como exemplo.</p>
+        <p style="font-size:0.85em; color:#666;"><strong>Ferramentas alternativas:</strong> Dify, GPTs personalizados, Make, Zapier, etc.</p>
+        <a class="btn" href="03_assistente_ia.html">Abrir Roteiro: Assistente de IA</a>
+      </div>
+
+      <div class="card">
+        <span class="card-label">📚 BÔNUS</span>
+        <h3>Análise Crítica (NotebookLM)</h3>
+        <p>Use documentos reais (PPCs, artigos, manuais) para gerar sínteses, questões e atividades. Ferramenta complementar para enriquecer o plano.</p>
+        <a class="btn btn-ghost" href="bonus_notebooklm.html">Abrir Roteiro: NotebookLM</a>
+      </div>
+
+      <div class="card">
+        <span class="card-label">🔮 EXTRA</span>
+        <h3>Demonstração: Agentes Avançados</h3>
+        <p>Visão de futuro: o que existe, o que faz sentido na docência e o que evitar. Ferramentas como Manus e Lovable em contexto.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+          <a class="btn-ghost btn-small" href="extra_manus.html">Manus</a>
+          <a class="btn-ghost btn-small" href="extra_lovable.html">Lovable</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-label">✅ CHECKLIST</span>
+        <h3>Antes de Começar</h3>
+        <ul style="margin:10px 0; padding-left:20px;">
+          <li>Tenha em mãos: <strong>disciplina, tema da aula e perfil da turma</strong></li>
+          <li>Abra um documento de referência (PPC/artigo/manual) para usar no NotebookLM</li>
+          <li>Salve tudo em uma pasta (ou Drive) para reaproveitar depois</li>
+          <li>Teste a conexão de internet e acesso às ferramentas</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>📊 Materiais da Aula</h2>
+    <p>Aqui estão os materiais que o professor apresentou durante o workshop. Você pode acessar os slides, revisar os conceitos e responder à avaliação.</p>
+    
+    <div class="grid">
+      <div class="card">
+        <span class="card-label">📽️ SLIDES</span>
+        <h3>Apresentação do Workshop</h3>
+        <p>Todos os slides apresentados durante a aula, com os conceitos, exemplos práticos e dicas de ouro.</p>
+        <a class="btn btn-secondary" href="https://www.canva.com/design/DAG_ivZcK1c/B2DBn8Jol3XBrlm82eHCcA/view?utm_content=DAG_ivZcK1c&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h727f5bb55f" target="_blank">Acessar Slides</a>
+      </div>
+
+      <div class="card">
+        <span class="card-label">📋 AVALIAÇÃO</span>
+        <h3>Pesquisa de Feedback</h3>
+        <p>Sua opinião é importante! Responda esta breve pesquisa para nos ajudar a melhorar o workshop.</p>
+        <a class="btn btn-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSe2-7cAIPxO8RGdYPBKFSdPc58E8hYIswy6CIwiX4EpBBZYlw/viewform" target="_blank">Responder Avaliação</a>
+      </div>
+    </div>
+
+    <h2>🛠️ Ferramentas Utilizadas (Gratuitas ou Freemium)</h2>
+    <p>Todas as ferramentas demonstradas neste workshop têm versões gratuitas ou de baixo custo, permitindo que você replique o processo sem investimento inicial.</p>
+    
+    <div class="tools-grid">
+      <div class="tool-badge free">✅ <a href="https://chat.openai.com" target="_blank">ChatGPT</a> (Free)</div>
+      <div class="tool-badge free">✅ <a href="https://gamma.app" target="_blank">Gamma</a> (Free)</div>
+      <div class="tool-badge free">✅ <a href="https://lovable.dev" target="_blank">Lovable</a> (Free)</div>
+      <div class="tool-badge free">✅ <a href="https://gemini.google.com" target="_blank">Gemini/Gems</a> (Free)</div>
+      <div class="tool-badge free">✅ <a href="https://claude.ai" target="_blank">Claude</a> (Free)</div>
+      <div class="tool-badge free">✅ <a href="https://notebooklm.google.com" target="_blank">NotebookLM</a> (Free)</div>
+      <div class="tool-badge premium">💎 <a href="https://canva.com" target="_blank">Canva</a> (Freemium)</div>
+      <div class="tool-badge premium">💎 <a href="https://dify.ai" target="_blank">Dify</a> (Self-hosted)</div>
+      <div class="tool-badge premium">💎 <a href="https://manus.im" target="_blank">Manus</a> (Freemium)</div>
+    </div>
+
+    <div class="warning-box">
+      <p><strong>⚠️ Nota Importante sobre Ética e Responsabilidade:</strong> O uso de IA na educação deve sempre respeitar princípios éticos, de autoria e confiabilidade. Não use IA para gerar conteúdo sem revisão, sempre cite as fontes, e ensine aos estudantes o uso responsável dessas ferramentas. A IA é um <strong>apoio pedagógico</strong>, não uma substituição do professor.</p>
+    </div>
+
+    <h2>📖 Estrutura do Roteiro</h2>
+    <p>Cada página segue a mesma estrutura para facilitar o acompanhamento:</p>
+    <ol>
+      <li><strong>Objetivo</strong>: O que você vai aprender e criar</li>
+      <li><strong>Ferramentas</strong>: Qual IA usar (com alternativas)</li>
+      <li><strong>Passo a Passo</strong>: Instruções detalhadas e demonstração</li>
+      <li><strong>Prompt Reutilizável</strong>: Código que você pode copiar e adaptar</li>
+      <li><strong>Resultado Esperado</strong>: O que você terá ao final</li>
+      <li><strong>Próximos Passos</strong>: Como avançar para a próxima atividade</li>
+    </ol>
+
+    <div class="info-box">
+      <p><strong>💬 Dúvidas durante o workshop?</strong> Levante a mão, faça a pergunta em voz alta ou envie uma mensagem. O objetivo é que você saia daqui com autonomia para replicar esse processo em qualquer contexto pedagógico.</p>
+    </div>
+
+    <div class="footer">
+      Prof. Albino Szesz Junior • <a href="https://albinojr.com" target="_blank" rel="noopener">albinojr.com</a> •
+      <a href="mailto:contato@albinojr.com">contato@albinojr.com</a> •
+      <a href="https://linkedin.com/in/albinojr12" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</body>
+</html>
