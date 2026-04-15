@@ -1,0 +1,551 @@
+/* ============================================================
+   BRAND EDUCATION — COMITÊ OLÍMPICO INTERNACIONAL
+   Arquivo: style.css
+   Descrição: todos os estilos visuais da capa de navegação
+   ============================================================ */
+
+
+/* ── RESET & BASE ─────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --blue:       #0078D0;
+  --yellow:     #FFB114;
+  --black:      #000000;
+  --green:      #00A651;
+  --red:        #F0282D;
+  --white:      #FFFFFF;
+  --gray-dark:  #1a1a1a;
+  --gray-mid:   #2E2E2E;
+  --gray-light: #f5f5f5;
+  --text-body:  #1a1a1a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', Arial, sans-serif;
+  background-color: var(--white);
+  color: var(--text-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+
+/* ── HERO HEADER ──────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  background-color: var(--black);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 60px 40px 80px;
+}
+
+/* Luzes diagonais coloridas ao fundo */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(0,120,208,0.18)   0%, transparent 35%),
+    linear-gradient(225deg, rgba(240,40,45,0.14)    0%, transparent 35%),
+    linear-gradient(315deg, rgba(255,177,20,0.12)   0%, transparent 40%),
+    linear-gradient(45deg,  rgba(0,166,81,0.10)     0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* Textura grain sutil */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+
+/* ── BARRA DE 5 CORES (topo) ──────────────────────────────── */
+
+.stripe-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  display: flex;
+}
+
+.stripe-bar span              { flex: 1; }
+.stripe-bar span:nth-child(1) { background: var(--blue); }
+.stripe-bar span:nth-child(2) { background: var(--yellow); }
+.stripe-bar span:nth-child(3) { background: #444; }
+.stripe-bar span:nth-child(4) { background: var(--green); }
+.stripe-bar span:nth-child(5) { background: var(--red); }
+
+
+/* ── LOGO ─────────────────────────────────────────────────── */
+
+.logo-rings {
+  position: relative;
+  z-index: 2;
+  width: min(420px, 80vw);
+  opacity: 0;
+  transform: translateY(-24px);
+  animation: fadeDown 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+  filter: drop-shadow(0 0 40px rgba(0, 120, 208, 0.3));
+}
+
+
+/* ── EYEBROW (supertítulo) ────────────────────────────────── */
+
+.eyebrow {
+  position: relative;
+  z-index: 2;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-top: 32px;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+}
+
+
+/* ── TÍTULO PRINCIPAL ─────────────────────────────────────── */
+
+.hero-title {
+  position: relative;
+  z-index: 2;
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: clamp(3.4rem, 9vw, 7.2rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  text-align: center;
+  max-width: 900px;
+  opacity: 0;
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+}
+
+.hero-title .accent {
+  color: var(--yellow);
+  display: block;
+}
+
+
+/* ── SUBTÍTULO ────────────────────────────────────────────── */
+
+.hero-subtitle {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  max-width: 640px;
+  line-height: 1.65;
+  margin-top: 28px;
+  opacity: 0;
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.75s forwards;
+}
+
+
+/* ── SETA DE SCROLL ───────────────────────────────────────── */
+
+.scroll-cue {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 1.4s forwards;
+}
+
+.scroll-cue span {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.scroll-arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.35);
+  transform: rotate(45deg);
+  animation: bounce 1.6s ease-in-out infinite;
+}
+
+
+/* ── SEÇÃO DE CONTEÚDO ────────────────────────────────────── */
+
+.content-section {
+  background: var(--white);
+  padding: 80px 40px 60px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+
+/* ── HEADING DE SEÇÃO ─────────────────────────────────────── */
+
+.section-heading {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.section-heading .line-accent {
+  display: inline-block;
+  width: 48px;
+  height: 4px;
+  background: var(--yellow);
+  vertical-align: middle;
+  margin-right: 14px;
+  border-radius: 2px;
+}
+
+
+/* ── TEXTO DE INTRODUÇÃO ──────────────────────────────────── */
+
+.intro-text {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--gray-mid);
+  line-height: 1.75;
+  max-width: 720px;
+  margin-bottom: 40px;
+}
+
+
+/* ── LISTA DE MÓDULOS ─────────────────────────────────────── */
+
+.module-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 56px;
+  border-left: 3px solid var(--gray-light);
+}
+
+.module-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.module-list li:last-child {
+  border-bottom: none;
+}
+
+.module-list li strong {
+  font-weight: 600;
+  font-size: 0.97rem;
+  color: var(--black);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.module-list li p {
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Pontos coloridos de cada módulo */
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.dot-blue   { background: var(--blue); }
+.dot-yellow { background: var(--yellow); }
+.dot-black  { background: #333; }
+.dot-green  { background: var(--green); }
+.dot-red    { background: var(--red); }
+.dot-gold   { background: #9F8F5E; }
+
+
+/* ── DIVISOR DE CORES ─────────────────────────────────────── */
+
+.color-divider {
+  display: flex;
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 0 56px;
+  max-width: 200px;
+}
+
+.color-divider span              { flex: 1; }
+.color-divider span:nth-child(1) { background: var(--blue); }
+.color-divider span:nth-child(2) { background: var(--yellow); }
+.color-divider span:nth-child(3) { background: #333; }
+.color-divider span:nth-child(4) { background: var(--green); }
+.color-divider span:nth-child(5) { background: var(--red); }
+
+
+/* ── HEADING DOS BOTÕES ───────────────────────────────────── */
+
+.buttons-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  color: var(--black);
+  margin-bottom: 28px;
+}
+
+
+/* ── GRID DE CARDS ────────────────────────────────────────── */
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 60px;
+}
+
+@media (max-width: 640px) {
+  .module-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 400px) {
+  .module-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ── CARD INDIVIDUAL ──────────────────────────────────────── */
+
+.module-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: var(--black);
+  border-radius: 6px;
+  overflow: hidden;
+  transition:
+    transform  0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease;
+  position: relative;
+  /* animação de entrada — controlada pelo JavaScript */
+  opacity: 0;
+  animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.module-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* Barra colorida no topo de cada card */
+.card-color-bar {
+  height: 5px;
+  width: 100%;
+}
+
+.card-body {
+  padding: 22px 20px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-num {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.card-title {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1.15;
+  transition: color 0.2s;
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+.card-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: auto;
+  padding-top: 16px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s, gap 0.2s;
+}
+
+.module-card:hover .card-arrow {
+  color: var(--white);
+  gap: 10px;
+}
+
+.card-arrow svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Cores das barras por módulo */
+.card-m1 .card-color-bar    { background: var(--blue); }
+.card-m2 .card-color-bar    { background: var(--yellow); }
+.card-m3 .card-color-bar    { background: #555; }
+.card-m4 .card-color-bar    { background: var(--green); }
+.card-m5 .card-color-bar    { background: var(--red); }
+.card-recap .card-color-bar {
+  background: linear-gradient(
+    90deg,
+    var(--blue)   0%,
+    var(--yellow) 25%,
+    #555          50%,
+    var(--green)  75%,
+    var(--red)    100%
+  );
+}
+
+/* Cor do título no hover por módulo */
+.card-m1:hover    .card-title { color: var(--blue); }
+.card-m2:hover    .card-title { color: var(--yellow); }
+.card-m3:hover    .card-title { color: #ccc; }
+.card-m4:hover    .card-title { color: var(--green); }
+.card-m5:hover    .card-title { color: var(--red); }
+.card-recap:hover .card-title { color: var(--yellow); }
+
+
+/* ── BLOCO DE TEXTO FINAL ─────────────────────────────────── */
+
+.footer-text-block {
+  background: var(--gray-light);
+  border-radius: 8px;
+  padding: 32px 36px;
+  margin-bottom: 20px;
+}
+
+.footer-text-block p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--gray-mid);
+  line-height: 1.75;
+}
+
+.footer-text-block strong {
+  font-weight: 600;
+  color: var(--black);
+}
+
+
+/* ── RODAPÉ ───────────────────────────────────────────────── */
+
+.page-footer {
+  border-top: 1px solid #e8e8e8;
+  padding: 24px 40px;
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: #aaa;
+}
+
+.footer-rings {
+  display: flex;
+  gap: 6px;
+}
+
+.footer-rings span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid;
+}
+
+.footer-rings span:nth-child(1) { border-color: var(--blue); }
+.footer-rings span:nth-child(2) { border-color: var(--yellow); }
+.footer-rings span:nth-child(3) { border-color: #333; }
+.footer-rings span:nth-child(4) { border-color: var(--green); }
+.footer-rings span:nth-child(5) { border-color: var(--red); }
+
+
+/* ── ANIMAÇÕES ────────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50%       { transform: rotate(45deg) translateY(5px); }
+}
+
+/* Delays escalonados para os cards (aplicados via JS) */
+.module-grid.not-visible .module-card {
+  animation: none;
+  opacity: 0;
+}
